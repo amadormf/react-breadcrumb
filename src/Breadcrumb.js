@@ -15,6 +15,7 @@ export default class Breadcrumb extends React.Component {
 
   static defaultProps = {
     pathSeparator: '/',
+    classes: {},
   }
 
   constructor(props) {
@@ -68,10 +69,65 @@ export default class Breadcrumb extends React.Component {
       breadcrumbPath: props.path,
     };
   }
-  render() {
+
+  _getPathComponents() {
+    const { pathConfiguration } = this.state;
+    return pathConfiguration.breadcrumbPath.map(
+      (index, path) => {
+        return this._getPathComponent(path, pathConfiguration.separatorChar, index);
+      }
+    );
+  }
+
+  _getPathComponent(pathObj, separatorChar, index) {
+    const { classes } = this.props;
+    const classNameContainer = classNames(
+      'Breadcrumb-container',
+      {
+        [classes['Breadcrumb-container']]: !!classes['Breadcrumb-container'],
+      }
+    );
+    const classNameSeparator = classNames(
+      'Breadcrumb-separator',
+      {
+        [classes['Breadcrumb-separator']]: !!classes['Breadcrumb-separator'],
+      }
+    );
+
+    const classNamePath = classNames(
+      'Breadcrumb-path',
+      {
+        [classes['Breadcrumb-path']]: !!classes['Breadcrumb-path'],
+      }
+    );
     return (
-      <div>
-        hello
+      <div
+        className={classNameContainer}
+        key={index}
+      >
+        <div className={classNameSeparator}>
+          {separatorChar}
+        </div>
+        <div className={classNamePath}>
+          <a href={pathObj.path}>
+            {pathObj}
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const { className } = this.props;
+    const classNameParent = classNames(
+      'Breadcrumb',
+      {
+        [className]: !!className,
+      }
+    );
+    return (
+      <div className={classNameParent}>
+        {this._getPathComponents()}
       </div>
     );
   }

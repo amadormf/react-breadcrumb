@@ -4,10 +4,12 @@ import Breadcrumb from '../index';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import chaiEnzyme from 'chai-enzyme'
 
 const { describe, it } = global;
 
 chai.use(sinonChai);
+chai.use(chaiEnzyme());
 
 const breadcrumbPath = [
   {
@@ -40,6 +42,7 @@ describe('Check path props is processed correctly', () => {
       breadcrumbPath,
     });
   });
+
   it('If send an object', () => {
     const wrapper = getBreadcrumb(breadcrumbPath);
     expect(wrapper.state('pathConfiguration')).to.deep.equal({
@@ -47,6 +50,7 @@ describe('Check path props is processed correctly', () => {
       breadcrumbPath,
     });
   });
+
   it('If change path props rebuild pathConfiguration', () => {
     const wrapper = getBreadcrumb('/check/another/path');
     wrapper.setProps({
@@ -60,9 +64,29 @@ describe('Check path props is processed correctly', () => {
 });
 
 describe('Render and className', () => {
-  it('Check simple render');
-  it('Check if we send a className prop the parent div have this class');
-  it('Check if we send a classes prop all items receive the correct class');
+  it('Check simple render', () => {
+    const wrapper = getBreadcrumb('/check/path');
+    expect(wrapper).to.have.className('Breadcrumb');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-container');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-path');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-separator');
+  });
+  it('Check if we send a className prop the parent div have this class', () => {
+    const wrapper = getBreadcrumb('/check/path', null, 'ClassTest');
+    expect(wrapper).to.have.className('Breadcrumb');
+    expect(wrapper).to.have.className('ClassTest');
+  });
+  it('Check if we send a classes prop all items receive the correct class', () => {
+    const wrapper = getBreadcrumb('/check/path', null, null, {
+      'Breadcrumb-container': 'ClassContainer',
+      'Breadcrumb-path': 'ClassPath',
+      'Breadcrumb-separator': 'ClassSeparator',
+    });
+    expect(wrapper).to.have.className('Breadcrumb');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-container .ClassContainer');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-path .ClassPath');
+    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-separator .ClassSeparator');
+  });
   it('Check if render the path correctly');
 });
 
