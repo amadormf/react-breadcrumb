@@ -75,7 +75,8 @@
     "react": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.5.0"
+    "babel-runtime": "^6.5.0",
+    "classnames": "^2.2.5"
   },
   "main": "dist/index.js",
   "engines": {
@@ -85,4 +86,3 @@
     "run": "lint, test"
   }
 }
-
