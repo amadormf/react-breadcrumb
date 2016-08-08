@@ -3,19 +3,20 @@ import classNames from 'classnames';
 
 export default class Breadcrumb extends React.Component {
   static propTypes = {
-    path: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.array,
+    path: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.array,
     ]).isRequired,
-    pathSeparator: React.PropTypes.string,
-    onClick: React.PropTypes.func.isRequired,
-    className: React.PropTypes.string,
-    classes: React.PropTypes.object,
+    separatorChar: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    classes: PropTypes.object,
   };
 
   static defaultProps = {
-    pathSeparator: '/',
+    separatorChar: '/',
     classes: {},
+    onClick: () => {},
   }
 
   constructor(props) {
@@ -33,7 +34,13 @@ export default class Breadcrumb extends React.Component {
   }
 
   _bindFunctions() {
+    this.handleClick = this.handleClick.bind(this);
+  }
 
+  handleClick(path) {
+    return (e) => {
+      this.props.onClick(e, path);
+    };
   }
 
   _buildPath(props) {
@@ -73,13 +80,11 @@ export default class Breadcrumb extends React.Component {
   _getPathComponents() {
     const { pathConfiguration } = this.state;
     return pathConfiguration.breadcrumbPath.map(
-      (index, path) => {
-        return this._getPathComponent(path, pathConfiguration.separatorChar, index);
-      }
+      (path, index) => (this._getPathComponent(path, pathConfiguration.separatorChar, index))
     );
   }
 
-  _getPathComponent(pathObj, separatorChar, index) {
+  _getPathComponent(pathObj, separatorChar, index) {
     const { classes } = this.props;
     const classNameContainer = classNames(
       'Breadcrumb-container',
@@ -100,20 +105,24 @@ export default class Breadcrumb extends React.Component {
         [classes['Breadcrumb-path']]: !!classes['Breadcrumb-path'],
       }
     );
+
     return (
-      <div
+      <span
         className={classNameContainer}
         key={index}
       >
-        <div className={classNameSeparator}>
+        <span className={classNameSeparator}>
           {separatorChar}
-        </div>
-        <div className={classNamePath}>
+        </span>
+        <span
+          onClick={this.handleClick(pathObj)}
+          className={classNamePath}
+        >
           <a href={pathObj.path}>
-            {pathObj}
+            {pathObj.label}
           </a>
-        </div>
-      </div>
+        </span>
+      </span>
     );
   }
 
