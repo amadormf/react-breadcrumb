@@ -92,6 +92,8 @@ describe('Render and className', () => {
     const paths = wrapper.find('.Breadcrumb-path');
     expect(paths.at(0)).to.contain.text('check');
     expect(paths.at(1)).to.contain.text('path');
+    expect(paths.at(0)).to.have.descendants('a');
+    expect(paths.at(1)).to.have.descendants('a');
     const separators = wrapper.find('.Breadcrumb-separator');
     expect(separators.at(0)).to.contain.text('/');
     expect(separators.at(1)).to.contain.text('/');
@@ -101,6 +103,26 @@ describe('Render and className', () => {
     const separators = wrapper.find('.Breadcrumb-separator');
     expect(separators.at(0)).to.contain.text('-');
     expect(separators.at(1)).to.contain.text('-');
+  });
+  it('If in a custom path, don\'t send a path shouldn\'t render link', () => {
+    const wrapper = getBreadcrumb([
+      {
+        label: 'check',
+        path: '/check',
+      },
+      {
+        label: 'path',
+        path: '/check/path',
+      },
+      {
+        label: 'empty',
+      },
+    ]);
+    const paths = wrapper.find('.Breadcrumb-path');
+    expect(paths.at(0)).to.contain.text('check');
+    expect(paths.at(1)).to.contain.text('path');
+    expect(paths.at(2)).to.contain.text('empty');
+    expect(paths.at(2)).to.not.have.descendants('a');
   });
 });
 

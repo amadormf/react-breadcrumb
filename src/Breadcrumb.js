@@ -118,12 +118,21 @@ export default class Breadcrumb extends React.Component {
           onClick={this.handleClick(pathObj)}
           className={classNamePath}
         >
-          <a href={pathObj.path}>
-            {pathObj.label}
-          </a>
+          {this._getLinkPath(pathObj)}
         </span>
       </span>
     );
+  }
+
+  _getLinkPath(pathObj) {
+    if (pathObj.path && pathObj.path !== '') {
+      return (
+        <a href={pathObj.path}>
+          {pathObj.label}
+        </a>
+      );
+    }
+    return pathObj.label;
   }
 
   render() {
