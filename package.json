@@ -4,7 +4,7 @@
   "description": "React Breadcrumb Component",
   "repository": {
     "type": "git",
-    "url": "https://github.com/you/repo.git"
+    "url": "https://github.com/amadormf/react-breadcrumb"
   },
   "license": "MIT",
   "scripts": {
