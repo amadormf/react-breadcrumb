@@ -111,9 +111,13 @@ export default class Breadcrumb extends React.Component {
         className={classNameContainer}
         key={index}
       >
-        <span className={classNameSeparator}>
-          {separatorChar}
-        </span>
+        {
+          index > 0
+          &&
+          <span className={classNameSeparator}>
+            {separatorChar}
+          </span>
+        }
         <span
           onClick={this.handleClick(pathObj)}
           className={classNamePath}

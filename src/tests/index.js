@@ -69,7 +69,7 @@ describe('Render and className', () => {
     expect(wrapper).to.have.className('Breadcrumb');
     expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-container');
     expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-path');
-    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-separator');
+    expect(wrapper).to.have.exactly(1).descendants('.Breadcrumb-separator');
   });
   it('Check if we send a className prop the parent div have this class', () => {
     const wrapper = getBreadcrumb('/check/path', () => {}, 'ClassTest');
@@ -85,7 +85,7 @@ describe('Render and className', () => {
     expect(wrapper).to.have.className('Breadcrumb');
     expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-container .ClassContainer');
     expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-path .ClassPath');
-    expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-separator .ClassSeparator');
+    expect(wrapper).to.have.exactly(1).descendants('.Breadcrumb-separator .ClassSeparator');
   });
   it('Check if render the path correctly', () => {
     const wrapper = getBreadcrumb('/check/path');
@@ -96,13 +96,11 @@ describe('Render and className', () => {
     expect(paths.at(1)).to.have.descendants('a');
     const separators = wrapper.find('.Breadcrumb-separator');
     expect(separators.at(0)).to.contain.text('/');
-    expect(separators.at(1)).to.contain.text('/');
   });
   it('If send separatorChar prop, should be render this separator', () => {
     const wrapper = getBreadcrumb('/check/path', () => {}, null, {}, '-');
     const separators = wrapper.find('.Breadcrumb-separator');
     expect(separators.at(0)).to.contain.text('-');
-    expect(separators.at(1)).to.contain.text('-');
   });
   it('If in a custom path, don\'t send a path shouldn\'t render link', () => {
     const wrapper = getBreadcrumb([
