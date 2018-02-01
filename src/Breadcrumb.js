@@ -142,8 +142,8 @@ export default class Breadcrumb extends React.Component {
   render() {
     const { className } = this.props;
     const classNameParent = classNames(
-      'Breadcrumb',
       {
+        Breadcrumb: !className,
         [className]: !!className,
       }
     );
