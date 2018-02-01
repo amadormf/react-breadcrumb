@@ -71,9 +71,12 @@ describe('Render and className', () => {
     expect(wrapper).to.have.exactly(2).descendants('.Breadcrumb-path');
     expect(wrapper).to.have.exactly(1).descendants('.Breadcrumb-separator');
   });
-  it('Check if we send a className prop the parent div have this class', () => {
-    const wrapper = getBreadcrumb('/check/path', () => {}, 'ClassTest');
+  it('Check if the parent has the default class when className prop is not set', () => {
+    const wrapper = getBreadcrumb('/check/path', () => {});
     expect(wrapper).to.have.className('Breadcrumb');
+  });
+  it('Check if the parent has the class we passed using the className prop', () => {
+    const wrapper = getBreadcrumb('/check/path', () => {}, 'ClassTest');
     expect(wrapper).to.have.className('ClassTest');
   });
   it('Check if we send a classes prop all items receive the correct class', () => {
